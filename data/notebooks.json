@@ -1,0 +1,20 @@
+[
+    {
+        "title": "hp",
+        "price": "510",
+        "img": "https://photo.png",
+        "id": "b0ea49c9-27d8-4712-b54d-4d0bc4cda272"
+    },
+    {
+        "title": "Asus",
+        "price": "600",
+        "img": "https://photos.asus.svg",
+        "id": "9d7f12c6-439b-4ff4-ad9d-5ca6f0bfee0f"
+    },
+    {
+        "title": "Lenova",
+        "price": "480",
+        "img": "https://photos.lenova.com",
+        "id": "aa0df5d9-fa60-4b0a-876c-b53f57f3ecd7"
+    }
+]
