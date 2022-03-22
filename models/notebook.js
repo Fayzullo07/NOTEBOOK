@@ -55,6 +55,11 @@ class Notebook {
             )
         });
     }
+
+    static async getById(id) {
+        const notebooks = await Notebook.getAll();
+        return notebooks.find(c => c.id === id);
+    }
 }
 
 module.exports = Notebook;

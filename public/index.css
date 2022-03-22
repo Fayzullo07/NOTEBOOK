@@ -17,6 +17,30 @@
     flex-direction: column;
 }
 
-.card-content {
+.card-image {
     flex-grow: 1;
+}
+
+.price {
+    font-size: 2rem;
+}
+
+.notebook {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.notebook h1 {
+    text-align: center;
+}
+
+.notebook img {
+    max-width: 800px;
+    height: auto;
+}
+
+.notebook .price.big {
+    font-size: 2.5rem;
 }
