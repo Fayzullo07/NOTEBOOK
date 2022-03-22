@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 const exphbs = require("express-handlebars");
-// const path = require("path");
+const homeRoutes = require("./routes/home");
+const notebooksRoutes = require("./routes/notebooks");
+const addRoutes = require("./routes/add");
 
 const hbs = exphbs.create({
     defaultLayout: "main",
@@ -12,19 +14,11 @@ app.engine('hbs', hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "views")
 
-app.use(express.static("public"))
+app.use(express.static("public"));
 
-app.get('/', (req, res) => {
-    res.render('index', {title: "Main Page", isHome: true})
-});
-
-app.get("/notebooks", (req, res) => {
-    res.render("notebooks", {title: "Notebooks", isNotebooks: true})
-})
-
-app.get("/add", (req, res) => {
-    res.render("add", {title: "Add Notebook", isAdd: true})
-})
+app.use("/", homeRoutes);
+app.use("/notebooks", notebooksRoutes);
+app.use("/add", addRoutes);
 
 const PORT = process.env.PORT || 5000;
 
