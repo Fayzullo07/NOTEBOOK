@@ -51,7 +51,7 @@ if ($card) {
                             class="img-fluid mb-4 mr-3"
                           />
                           <h3><strong>Your Cart is Empty</strong></h3>
-                          <h4>Add something to make me happy :)</h4>
+                          <h4>Add something to make me happy 😭</h4>
                           <a
                             href="/notebooks"
                             class="btn btn-primary cart-btn-transform m-3"
