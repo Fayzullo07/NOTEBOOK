@@ -12,9 +12,13 @@
                 {{!-- <p>{{desc}}</p> --}}
                 <b class="price">{{price}}</b>
             </div>
-            <div class="card-action">
-                <a href="/notebooks/{{id}}" target="_blank">Notebooks Details</a>
+            <div class="card-action actions">
+                <a href="/notebooks/{{id}}" target="_blank">Detail</a>
                 <a href="/notebooks/{{id}}/edit?allow=true">Edit</a>
+                <form action="/card/add" method="POST">
+                    <input type="hidden" name="id" value="{{id}}">
+                    <button type="submit" class="btn btn-primary">Buy</button>
+                </form>
             </div>
         </div>
     {{/each}}

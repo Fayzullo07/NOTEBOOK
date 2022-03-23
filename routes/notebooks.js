@@ -19,7 +19,6 @@ router.get("/:id/edit", async (req, res) => {
     })
 });
 
-
 router.post("/edit", async (req, res) => {
     await Notebook.update(req.body);
     res.redirect("/notebooks");
