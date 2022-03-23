@@ -1,0 +1,19 @@
+{
+    "notebooks": [
+        {
+            "title": "hp",
+            "price": "510",
+            "img": "https://www.tfk.ru/upload/iblock/154/pn1nqcecihtfmaqu1pg8q32hqwzeb1k4/noutbuk_hp_pavilion_15_eg0131ur_4e1j3ea.webp?1631816941",
+            "id": "b0ea49c9-27d8-4712-b54d-4d0bc4cda272",
+            "count": 1
+        },
+        {
+            "title": "Asus",
+            "price": "600",
+            "img": "https://www.notebookcheck-ru.com/uploads/tx_nbc2/ASUS_D509DA-BR128.jpg",
+            "id": "9d7f12c6-439b-4ff4-ad9d-5ca6f0bfee0f",
+            "count": 3
+        }
+    ],
+    "price": 2310
+}
