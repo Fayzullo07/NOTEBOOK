@@ -54,3 +54,9 @@
 .card-action form {
     margin-top: 10px;
 }
+
+.bascket {
+    padding: 40px;
+    text-align: center;
+    font-family: "Comic Sans MS", sans-serif;
+}
