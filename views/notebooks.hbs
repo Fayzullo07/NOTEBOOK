@@ -5,15 +5,16 @@
     {{#each notebooks}}
         <div class="card">
             <div class="card-image">
-            <img src="{{img}}" title="{{title}}">
+                <img src="{{img}}" title="{{title}}">
             </div>
             <div class="card-content">
-            <span class="card-title">{{title}}</span>
-            {{!-- <p>{{desc}}</p> --}}
-            <b class="price">{{price}}</b>
+                <span class="card-title">{{title}}</spa>
+                {{!-- <p>{{desc}}</p> --}}
+                <b class="price">{{price}}</b>
             </div>
             <div class="card-action">
-            <a href="/notebooks/{{id}}" target="_blank">Notebooks Details</a>
+                <a href="/notebooks/{{id}}" target="_blank">Notebooks Details</a>
+                <a href="/notebooks/{{id}}/edit?allow=true">Edit</a>
             </div>
         </div>
     {{/each}}

@@ -1,0 +1,56 @@
+<h4>Edit Notebook {{notebook.title}}</h4>
+
+<form action="/notebooks/edit" method="POST" class="z-depth-4 f_control">
+  <div class="input-field col s6">
+    <input
+      id="title"
+      name="title"
+      type="text"
+      class="validate"
+      required
+      value="{{notebook.title}}"
+    />
+    <label for="title">Noutbooks Model</label>
+    <span class="helper-text" data-error="Enter Notebooks Name"></span>
+  </div>
+  <div class="input-field col s6">
+    <input
+      id="price"
+      name="price"
+      type="number"
+      class="validate"
+      required
+      min="1"
+      value="{{notebook.price}}"
+    />
+    <label for="price">Price</label>
+    <span class="helper-text" data-error="Enter Price"></span>
+  </div>
+  <div class="input-field col s6">
+    <input
+      id="img"
+      name="img"
+      type="text"
+      class="validate"
+      required
+      value="{{notebook.img}}"
+    />
+    <label for="img">URL Image</label>
+    <span class="helper-text" data-error="Enter URL Imge"></span>
+  </div>
+  <div class="input-field col s6">
+    <input
+      id="desc"
+      name="descr"
+      type="text"
+      class="materialize-textarea"
+      required
+      value="{{notebook.desc}}"
+    />
+    <label for="descr">Description</label>
+    <span class="helper-text" data-error="Enter Description"></span>
+  </div>
+
+  <input type="hidden" name="id" value="{{notebook.id}}">
+  <button class="btn btn-primary">Edit Notebook</button>
+</form>
