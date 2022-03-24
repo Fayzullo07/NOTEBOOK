@@ -22,6 +22,8 @@ app.use("/notebooks", notebooksRoutes);
 app.use("/add", addRoutes);
 app.use("/card", cardRoutes);
 
+const url = "mongodb+srv://notebooks:F4995875f@cluster0.tpf56.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
