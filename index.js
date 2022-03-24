@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
 const exphbs = require("express-handlebars");
 const homeRoutes = require("./routes/home");
 const notebooksRoutes = require("./routes/notebooks");
@@ -22,10 +23,20 @@ app.use("/notebooks", notebooksRoutes);
 app.use("/add", addRoutes);
 app.use("/card", cardRoutes);
 
-const url = "mongodb+srv://notebooks:F4995875f@cluster0.tpf56.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
-const PORT = process.env.PORT || 5000;
+async function start() {
+    try {
+        const url = "mongodb+srv://fayzullo:F4995875f@cluster0.tpf56.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+        await mongoose.connect(url, { useNewUrlParser: true });
 
-app.listen(PORT, () => {
-    console.log(`Server has been started on port ${PORT}...`)
-})
+        const PORT = process.env.PORT || 5000;
+        
+        app.listen(PORT, () => {
+            console.log(`Server has been started on port ${PORT}...`)
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+start();
