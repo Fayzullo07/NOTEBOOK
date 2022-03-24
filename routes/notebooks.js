@@ -3,7 +3,7 @@ const Notebook = require("../models/notebook");
 const router = Router();
 
 router.get("/", async (req, res) => {
-    const notebooks = await Notebook.getAll();
+    const notebooks = await Notebook.find();
     // console.log(notebooks)
     res.render("notebooks", {title: "Notebooks", isNotebooks: true, notebooks});
 });
@@ -12,7 +12,7 @@ router.get("/:id/edit", async (req, res) => {
     if(!req.query.allow) {
         return res.redirect("/");
     }
-    const notebook = await Notebook.getById(req.params.id);
+    const notebook = await Notebook.findById(req.params.id);
     res.render("notebook-edit", {
         title: `Edit ${notebook.title}`,
         notebook,
@@ -20,12 +20,12 @@ router.get("/:id/edit", async (req, res) => {
 });
 
 router.post("/edit", async (req, res) => {
-    await Notebook.update(req.body);
+    await Notebook.findByIdAndUpdate(req.params.id, req.body);
     res.redirect("/notebooks");
 })
 
 router.get("/:id", async (req, res) => {
-    const notebook = await Notebook.getById(req.params.id);
+    const notebook = await Notebook.findById(req.params.id);
     res.render("notebook", {
         layout: "detail",
         title: `Notebook ${notebook.title}`, 
