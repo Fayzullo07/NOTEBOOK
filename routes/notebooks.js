@@ -22,6 +22,15 @@ router.get("/:id/edit", async (req, res) => {
 router.post("/edit", async (req, res) => {
     await Notebook.findByIdAndUpdate(req.params.id, req.body);
     res.redirect("/notebooks");
+});
+
+router.post("/remove", async (req, res) => {
+    try {
+        await Notebook.deleteOne({_id: req.body.id});
+        res.redirect("/notebooks");
+    } catch (e) {
+        console.log(e);
+    };
 })
 
 router.get("/:id", async (req, res) => {
