@@ -8,6 +8,7 @@ const homeRoutes = require("./routes/home");
 const notebooksRoutes = require("./routes/notebooks");
 const addRoutes = require("./routes/add");
 const cardRoutes = require("./routes/card");
+const ordersRouter = require("./routes/orders");
 const User = require("./models/user");
 
 const hbs = exphbs.create({
@@ -36,6 +37,7 @@ app.use("/", homeRoutes);
 app.use("/notebooks", notebooksRoutes);
 app.use("/add", addRoutes);
 app.use("/card", cardRoutes);
+app.use("/orders", ordersRouter);
 
 
 async function start() {
