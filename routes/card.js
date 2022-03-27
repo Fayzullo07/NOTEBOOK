@@ -2,6 +2,19 @@ const { Router } = require("express");
 const Notebook = require("../models/notebook");
 const router = Router();
 
+function mapCart (cart) {
+    return cart.items.map((s) => ({
+        ...s.notebookId._doc,
+        count: s.count
+    }))
+}
+
+function computePrice (notebooks) {
+    return notebooks.reduce((total, notebook) => {
+        return (total += notebook.price * notebook.count);
+    }, 0);
+}
+
 router.post("/add", async (req, res) => {
     const notebook = await Notebook.findById(req.body.id);
     await req.user.addToCart( notebook );
@@ -14,12 +27,13 @@ router.delete("/remove/:id", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-    const card = await Card.fetch();
+    const user = await req.user.populate("cart.items.notebookId");
+    const notebooks = mapCart(user.cart);
     res.render("card", {
         title: "Basket",
         isCard: true,
-        notebooks: card.notebooks,
-        price: card.price,
+        notebooks: notebooks,
+        price: computePrice(notebooks),
     });
 });
 
