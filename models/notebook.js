@@ -16,6 +16,10 @@ const notebook = new Schema({
     descr: {
         type: String,
         required: true
+    },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
     }
 });
 

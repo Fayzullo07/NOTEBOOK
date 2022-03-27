@@ -3,8 +3,8 @@ const Notebook = require("../models/notebook");
 const router = Router();
 
 router.get("/", async (req, res) => {
-    const notebooks = await Notebook.find();
-    // console.log(notebooks)
+    const notebooks = await Notebook.find().populate("userId", "email name").select("price title img descr");
+    console.log(notebooks)
     res.render("notebooks", {title: "Notebooks", isNotebooks: true, notebooks});
 });
 

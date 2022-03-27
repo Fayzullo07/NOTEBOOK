@@ -11,7 +11,8 @@ router.post("/", async (req, res) => {
         title: req.body.title, 
         price: req.body.price, 
         img: req.body.img,
-        descr: req.body.descr
+        descr: req.body.descr,
+        userId: req.user,
     });
     try {
         await notebook.save();
