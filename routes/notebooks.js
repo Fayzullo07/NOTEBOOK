@@ -19,7 +19,7 @@ router.get("/:id/edit", async (req, res) => {
 });
 
 router.post("/edit", async (req, res) => {
-    await Notebook.findByIdAndUpdate(req.params.id, req.body);
+    await Notebook.findByIdAndUpdate(req.body.id, req.body);
     res.redirect("/notebooks");
 });
 
