@@ -44,5 +44,21 @@ userSchema.methods.addToCart = function ( notebook ) {
 
     this.cart = { items };
     return this.save();
+};
+
+userSchema.methods.removeFromCart = function (id) {
+    let items = [...this.cart.items];
+    const index = items.findIndex(
+        (s) => s.notebookId.toString() === id.toString()
+    );
+
+    if(items[index].count === 1) {
+        items = items.filter((s) => s.notebookId.toString() !== id.toString());
+    } else {
+        items[index].count--;
+    }
+
+    this.cart = { items };
+    return this.save();
 }
 module.exports = model("User", userSchema);
