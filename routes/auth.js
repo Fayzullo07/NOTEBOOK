@@ -23,7 +23,20 @@
      req.session.save(err => {
          if(err) throw err;
          res.redirect("/");
-     })
+     });
+ });
+
+ router.post("/register", async (req, res) => {
+     try {
+        const {email, password, name} = req.body;
+        const candidate = await User.findOne({email});
+
+        if(candidate) {
+            res.redirect("/auth/login#register")
+        }
+     } catch (e) {
+         console.log(e);
+     }
  })
 
 
