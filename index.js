@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const Handlebars = require('handlebars')
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 const exphbs = require("express-handlebars");
+const session = require("express-session")
 const homeRoutes = require("./routes/home");
 const notebooksRoutes = require("./routes/notebooks");
 const addRoutes = require("./routes/add");
@@ -11,6 +12,7 @@ const cardRoutes = require("./routes/card");
 const ordersRouter = require("./routes/orders");
 const authRoutes = require("./routes/auth");
 const User = require("./models/user");
+const varMiddleware = require("./middleware/var");
 
 const hbs = exphbs.create({
     defaultLayout: "main",
@@ -22,18 +24,25 @@ app.engine('hbs', hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "views");
 
-app.use(async (req, res, next) => {
-    try {
-        const user = await User.findById("6240bb20cbf670237e093fc5");
-        req.user = user;
-        next();
-    } catch (e) {
-        console.log(e);
-    }
-})
+// app.use(async (req, res, next) => {
+//     try {
+//         const user = await User.findById("6240bb20cbf670237e093fc5");
+//         req.user = user;
+//         next();
+//     } catch (e) {
+//         console.log(e);
+//     }
+// })
 
 app.use(express.static("public"));
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({extended: true}));
+app.use(session({
+    secret: "secret val",
+    resave: false,
+    saveUninitialized: false,
+}));
+app.use(varMiddleware);
+
 app.use("/", homeRoutes);
 app.use("/notebooks", notebooksRoutes);
 app.use("/add", addRoutes);
