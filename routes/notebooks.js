@@ -1,5 +1,6 @@
 const {Router} = require("express");
 const Notebook = require("../models/notebook");
+const auth = require("../middleware/auth");
 const router = Router();
 
 router.get("/", async (req, res) => {
@@ -7,7 +8,7 @@ router.get("/", async (req, res) => {
     res.render("notebooks", {title: "Notebooks", isNotebooks: true, notebooks});
 });
 
-router.get("/:id/edit", async (req, res) => {
+router.get("/:id/edit", auth, async (req, res) => {
     if(!req.query.allow) {
         return res.redirect("/");
     }
@@ -18,12 +19,12 @@ router.get("/:id/edit", async (req, res) => {
     })
 });
 
-router.post("/edit", async (req, res) => {
+router.post("/edit", auth, async (req, res) => {
     await Notebook.findByIdAndUpdate(req.body.id, req.body);
     res.redirect("/notebooks");
 });
 
-router.post("/remove", async (req, res) => {
+router.post("/remove", auth, async (req, res) => {
     try {
         await Notebook.deleteOne({_id: req.body.id});
         res.redirect("/notebooks");
