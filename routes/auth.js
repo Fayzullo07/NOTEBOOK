@@ -2,13 +2,14 @@ const { Router } = require("express");
 const bcrypt = require("bcryptjs");
 const {body, validationResult} = require("express-validator/check")
 const User = require("../models/user");
+const {registerValidators} = require("../utils/validators");
 const router = Router();
 
 router.get("/login", async (req, res) => {
   res.render("auth/login", {
     title: "Register",
     isLogin: true,
-    registerError: req.flash("error"),
+    registerError: req.flash("registerError"),
     loginError: req.flash("loginError"),
   });
 });
@@ -45,31 +46,25 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post("/register", body("email").isEmail(), async (req, res) => {
+router.post("/register", registerValidators, async (req, res) => {
   try {
-    const { email, password, name } = req.body;
-    const candidate = await User.findOne({ email });
+    const { email, password, name, confirm } = req.body;
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         req.flash("registerError", errors.array()[0].msg);
         return res.status(422).redirect("/auth/login#register");
     }
+    const hashPass = await bcrypt.hash(password, 10);
 
-    if (candidate) {
-      req.flash("error", "This email is already exist");
-      res.redirect("/auth/login#register");
-    } else {
-      const hashPass = await bcrypt.hash(password, 10);
-      const user = new User({
-        email: email,
-        name: name,
-        password: hashPass,
-        cart: { items: [] },
-      });
-      await user.save();
-      res.redirect("/auth/login#login");
-    }
+    const user = new User({
+      email: email,
+      name: name,
+      password: hashPass,
+      cart: { items: [] },
+    });
+    await user.save();
+    res.redirect("/auth/login#login");
   } catch (e) {
     console.log(e);
   }
