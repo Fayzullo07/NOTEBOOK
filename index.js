@@ -15,6 +15,7 @@ const ordersRoutes = require("./routes/orders");
 const authRoutes = require("./routes/auth");
 const varMiddleware = require("./middleware/var");
 const userMiddleware = require("./middleware/user");
+const errorPage = require("./middleware/error");
 
 const MONGODB_URI = "mongodb+srv://fayzullo:F4995875f@cluster0.tpf56.mongodb.net/shop";
 
@@ -54,6 +55,7 @@ app.use("/add", addRoutes);
 app.use("/card", cardRoutes);
 app.use("/orders", ordersRoutes);
 app.use("/auth", authRoutes);
+app.use(errorPage);
 
 async function start() {
   try {
