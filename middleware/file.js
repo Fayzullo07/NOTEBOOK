@@ -4,7 +4,7 @@ const storage = multer.diskStorage({
         cb(null, "images")
     },
     filename(req, file, cb) {
-        cb(null, new Date().toISOString() + " " + file.originalname)
+        cb(null, new Date().toISOString().replace(/:/g, "-") + "-" + file.originalname)
     }
 });
 
@@ -19,6 +19,6 @@ const filterFile = (req, res, cb) => {
 }
 
 module.exports = multer({
-    storage: storage,
-    filterFile: filterFile,
+    storage,
+    filterFile,
 })

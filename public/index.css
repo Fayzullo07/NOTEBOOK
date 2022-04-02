@@ -121,7 +121,6 @@
   
   #inside-panel {
     display: flex;
-    height: 100%;
     width: 100%;
     margin: 0rem;
     background: linear-gradient(45deg, #f15156, #ffcf99);

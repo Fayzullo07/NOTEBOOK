@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const app = express();
 const flash = require("connect-flash");
 const mongoose = require("mongoose");
@@ -37,7 +38,8 @@ app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "views");
 
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/images", express.static(path.join(__dirname, "images")))
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
@@ -48,7 +50,7 @@ app.use(
   })
 );
 
-app.use(fileMiddleware.single("avatar"))
+app.use(fileMiddleware.single("avatar"));
 app.use(flash());
 app.use(varMiddleware);
 app.use(userMiddleware);
