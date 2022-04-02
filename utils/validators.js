@@ -22,3 +22,10 @@ exports.registerValidators = [
     }).trim(),
     body("name").isLength({min: 3}).withMessage("Name should be min 3 symbols"),
 ]
+
+exports.notebookValidators = [
+    body("title").isLength({min: 3}).withMessage("Minimum length for title should be 3 symbols").trim(),
+    body("price").isNumeric().withMessage("Write correct price"),
+    body("img").isURL().withMessage("Write correct URL Image"),
+    body("descr").isLength({min: 10}).withMessage("Description should be min 10 symbols")
+]
