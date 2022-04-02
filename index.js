@@ -16,6 +16,7 @@ const authRoutes = require("./routes/auth");
 const profileRoutes = require("./routes/profile");
 const varMiddleware = require("./middleware/var");
 const userMiddleware = require("./middleware/user");
+const fileMiddleware = require("./middleware/file");
 const errorPage = require("./middleware/error");
 
 const MONGODB_URI = "mongodb+srv://fayzullo:F4995875f@cluster0.tpf56.mongodb.net/shop";
@@ -46,6 +47,8 @@ app.use(
     store,
   })
 );
+
+app.use(fileMiddleware.single("avatar"))
 app.use(flash());
 app.use(varMiddleware);
 app.use(userMiddleware);

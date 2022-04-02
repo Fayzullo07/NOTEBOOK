@@ -6,7 +6,11 @@ router.get("/", async (req, res) => {
         title: "Profile",
         isProfile: true,
         user: req.user.toObject()
-    })
+    });
+});
+
+router.post("/", async (req, res) => {
+
 })
 
 module.exports = router;
