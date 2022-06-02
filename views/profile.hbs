@@ -1,53 +1,61 @@
-<div class="gradient">
-  <div id="panel" class="center">
-    <div id="inside-panel">
-      <div class="gradient-border">
-        <ul>
-          <li><b>Email:</b><span id="title">{{user.email}}</span></li>
-        </ul>
-        <h1 style="color: black;">{{user.name}}</h1>
-        <hr />
-        {{#if user.avatarUrl}}
-          <img
-            src="/{{user.avatarUrl}}"
-            alt="avatar-{{user.name}}"
-          />
-        {{else}}
-          <img
-          class="avatar"
-            src="/user.png"
-            alt="avatar-{{user.name}}"
-          />
-        {{/if}}
+{{#if error}}
+<div class="alert alert-danger alert-dismissible fade show col-lg-8 offset-lg-2 mt-2" role="alert">
+    <strong>Error!</strong>
+    {{error}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{{/if}}
 
-        <form action="/profile" method="POST" enctype="multipart/form-data">
-          <div class="input-field">
-            <input
-              id="name"
-              name="name"
-              type="text"
-              class="validate"
-              required
-            />
-            <label for="name">Enter Your Name</label>
-            <span class="helper-text" data-error="Enter Your Name"></span>
-          </div>
-          <div class="file-field input-field">
-            <div class="btn deep-orange accent-3">
-              <span>Photo</span>
-              <input type="file" name="avatar" />
-            </div>
-            <div class="file-path-wrapper">
-              <input
-                class="file-path validate"
-                type="text"
-                placeholder="Upload one or more files"
-              />
-            </div>
-          </div>
-          <button type="submit" class="btn deep-orange accent-4">Change Acaunt</button>
-        </form>
-      </div>
+<div class="row shadow rounded-3  mt-lg-5 mt-md-5 mb-3">
+    <div class="col-md-6">
+        <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+            {{#if user.photoUrl}}
+            <img class="rounded mt-md-5" width="300px" src="/{{user.photoUrl}}" alt="photo-{{user.name}}">
+            {{else}}
+            <img class="rounded mt-3" width="300px"
+                src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+                alt="photo-{{user.name}}">
+            {{/if}}
+            <h1 class="font-weight-bold">{{user.name}}</h1><b class="text-black-50">{{user.email}}</b><span> </span>
+        </div>
     </div>
-  </div>
+    <div class="col-md-6">
+        <h2 class="text-center mt-lg-3">Profile Settings</h2>
+        <form action="/profile" method="POST" class="p-4 mt-2" enctype="multipart/form-data">
+            <div class="row">
+                <div class="form-floating mb-3 mt-3 col-md-6">
+                    <input type="text" class="form-control" id="name" placeholder="Enter Notebooks Name" name="name"
+                        required value="{{user.name}}" />
+                    <label class="p-3" for="name">Name</label>
+                </div>
+                <div class="form-floating mb-3 mt-3 col-md-6">
+                    <input type="text" class="form-control" id="email" placeholder="Enter Your Email" name="email"
+                        required value="{{user.email}}" />
+                    <label for="email" class="p-3">Email</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating mb-3 mt-3 col-md-6">
+                    <input type="password" class="form-control" id="passord" placeholder="Enter Password"
+                        name="password" required value="{{password}}" />
+                    <label class="p-3" for="password">Password</label>
+                </div>
+                <div class="form-floating mb-3 mt-3 col-md-6">
+                    <input type="password" class="form-control" id="confirm" placeholder="Enter price" name="confirm"
+                        required />
+                    <label for="confirm" class="p-3">Confirm</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 mt-3 col-md-12">
+                    <input type="file" class="form-control" placeholder="Upload Photo" name="photo" />
+                </div>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-outline-success">UPDATE PROFILE</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
 </div>

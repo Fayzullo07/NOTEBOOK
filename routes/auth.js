@@ -1,73 +1,91 @@
 const { Router } = require("express");
 const bcrypt = require("bcryptjs");
-const {body, validationResult} = require("express-validator/check")
 const User = require("../models/user");
-const {registerValidators} = require("../utils/validators");
+const { validationResult } = require("express-validator/check");
+const { registerValidators } = require("../utils/validators");
 const router = Router();
 
+// LOGIN
 router.get("/login", async (req, res) => {
-  res.render("auth/login", {
-    title: "Register",
-    isLogin: true,
-    registerError: req.flash("registerError"),
-    loginError: req.flash("loginError"),
-  });
-});
-
-router.get("/logout", async (req, res) => {
-  req.session.destroy(() => {
-    res.redirect("/auth/login#login");
-  });
+  res.render("auth/login", { title: "Login" });
 });
 
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const candidate = await User.findOne({ email });
+    const user = await User.findOne({ email });
 
-    if (candidate) {
-      const samePas = bcrypt.compare(password, candidate.password);
-      if (samePas) {
-        req.session.user = candidate;
+    if (user) {
+      const samePass = await bcrypt.compare(password, user.password);
+      if (samePass) {
+        req.session.user = user;
         req.session.isAuthenticated = true;
         req.session.save((err) => {
           if (err) throw err;
 
           res.redirect("/");
         });
+      } else {
+        return res.status(422).render("auth/login", {
+          title: "Login",
+          error: "Password wrong",
+          email,
+        });
       }
     } else {
-      req.flash("loginError", "Password wrong");
-      res.redirect("/auth/login#login");
+      return res.status(422).render("auth/login", {
+        title: "Login",
+        error: "This username does not found",
+        email,
+      });
     }
-  } catch (e) {
-    req.flash("loginError", "This username does not found");
-    console.log(e);
+  } catch (error) {
+    console.log(error);
   }
+});
+
+// REGISTER
+router.get("/register", (req, res) => {
+  res.render("auth/register", { title: "Register" });
 });
 
 router.post("/register", registerValidators, async (req, res) => {
   try {
-    const { email, password, name, confirm } = req.body;
-
+    const { email, password, name } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        req.flash("registerError", errors.array()[0].msg);
-        return res.status(422).redirect("/auth/login#register");
+      return res.status(422).render("auth/register", {
+        title: "Register",
+        error: errors.array()[0].msg,
+        data: {
+          email,
+          name,
+          password,
+        },
+      });
     }
     const hashPass = await bcrypt.hash(password, 10);
 
     const user = new User({
-      email: email,
-      name: name,
+      name,
+      email,
       password: hashPass,
       cart: { items: [] },
     });
+
     await user.save();
-    res.redirect("/auth/login#login");
-  } catch (e) {
-    console.log(e);
+    res.redirect("/auth/login");
+  } catch (error) {
+    console.log(error);
   }
+});
+
+// LOGOUT
+
+router.get("/logout", async (req, res) => {
+  req.session.destroy(() => {
+    res.redirect("/auth/login");
+  });
 });
 
 module.exports = router;

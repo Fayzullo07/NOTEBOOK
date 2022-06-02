@@ -1,16 +1,15 @@
+{{#if notebooks_images.length}}
 <!-- Swiper -->
-{{#if notebooks.length}}
-  <div class="swiper mySwiper">
+<div class="swiper mySwiper">
     <div class="swiper-wrapper">
-          {{#each notebooks}}
-              <div class="swiper-slide">
-                <img src="{{img}}" title="{{title}}" />
-              <div class="content">
-                <h2>{{title}} <br><span>{{price}}</span></h2>
-              </div>
-              </div>
-          {{/each}}
-  </div>
+        {{#each notebooks_images}}
+        <div class="swiper-slide">
+            <img src="{{img}}" />
+        </div>
+        {{/each}}
+    </div>
+</div>
+
 {{else}}
-<h1>Not Notebook</h1>      
+<h1>Not</h1>
 {{/if}}

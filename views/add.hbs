@@ -1,27 +1,35 @@
-<h4>Add New Notebooks</h4>
+<h3 class="text-center mt-4">Add New Notebooks</h3>
+
 {{#if error}}
-    <p class="alert">{{error}}</p>
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Error!</strong>
+  {{error}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 {{/if}}
-<form action="/add" method="POST" class="z-depth-4 f_control" novalidate>
-    <div class="input-field col s6">
-        <input id="title" name="title" type="text" class="validate" required value="{{data.title}}" />
-        <label for="title">Noutbooks Model</label>
-        <span class="helper-text" data-error="Enter Notebooks Name"></span>
-    </div>
-    <div class="input-field col s6">
-        <input id="price" name="price" type="number" class="validate" required min="1" value="{{data.price}}"/>
-        <label for="price">Price</label>
-        <span class="helper-text" data-error="Enter Price"></span>
-    </div>
-    <div class="input-field col s6">
-        <input id="img" name="img" type="text" class="validate" required value="{{data.img}}" />
-        <label for="img">URL Image</label>
-        <span class="helper-text" data-error="Enter URL Imge"></span>
-    </div>
-    <div class="input-field col s6">
-        <input id="descr" name="descr" type="text" class="validate" required value="{{data.descr}}" />
-        <label for="descr">Description</label>
-        <span class="helper-text" data-error="Enter Description"></span>
-    </div>
-    <button class="btn btn-primary">Add Notebooks</button>
+
+<form action="/add" method="POST" class="shadow p-4 mt-4" novalidate>
+  <div class="form-floating mb-3 mt-3">
+    <input type="text" class="form-control" id="title" placeholder="Enter Notebooks Name" name="title" required
+      value="{{data.title}}" />
+    <label for="title">Notebooks Model</label>
+  </div>
+  <div class="form-floating mb-3">
+    <input type="number" class="form-control" id="price" placeholder="Enter price" min="1" name="price" required
+      value="{{data.price}}" />
+    <label for="price" class="form-label">Price</label>
+  </div>
+  <div class="form-floating mb-3 mt-3">
+    <input type="text" class="form-control" id="img" placeholder="Enter URL Image" name="img" required
+      value="{{data.img}}" />
+    <label for="img" class="form-label">URL Image</label>
+  </div>
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" id="descr" placeholder="Enter Description" name="descr" required
+      value="{{data.descr}}" />
+    <label for="descr" class="form-label">Description</label>
+  </div>
+  <div class="d-grid">
+    <button type="submit" class="btn btn-success">Add Notebooks</button>
+  </div>
 </form>

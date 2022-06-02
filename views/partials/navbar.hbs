@@ -3,50 +3,23 @@
   <div id="toggle"></div>
   <div id="navbar">
     <ul>
-      {{#if isHome}}
-        <li class="active"><a href="/">Home</a></li>
-      {{else}}
-        <li><a href="/">Home</a></li>
-      {{/if}}
+      <li><a href="/">Home</a></li>
 
-      {{#if isNotebooks}}
-        <li class="active"><a href="/notebooks">Notebooks</a></li>
-      {{else}}
-        <li><a href="/notebooks">Notebooks</a></li>
-      {{/if}}
+      <li><a href="/notebooks">Notebooks</a></li>
 
       {{#if isAuth}}
-        {{#if isAdd}}
-          <li class="active"><a href="/add">Add Notebooks</a></li>
-        {{else}}
-          <li><a href="/add">Add Notebooks</a></li>
-        {{/if}}
 
-        {{#if isCard}}
-          <li class="active"><a href="/card">Basket</a></li>
-        {{else}}
-          <li><a href="/card">Basket</a></li>
-        {{/if}}
+      <li><a href="/add">Add Notebooks</a></li>
+      <li><a href="/card">Basket</a></li>
+      <li><a href="/orders">Order</a></li>
+      <li><a href="/profile">Profile</a></li>
+      <li><a href="/auth/logout">LOGOUT</a></li>
 
-        {{#if isOrder}}
-          <li class="active"><a href="/orders">Order</a></li>
-        {{else}}
-          <li><a href="/orders">Order</a></li>
-        {{/if}}
-
-        {{#if isProfile}}
-          <li class="active"><a href="/profile">Profile</a></li>
-        {{else}}
-          <li><a href="/profile">Profile</a></li>
-        {{/if}}
-
-        <li><a href="/auth/logout">Log out</a></li>
       {{else}}
-        {{#if isLogin}}
-          <li class="active"><a href="/auth/login#login">Login in</a></li>
-        {{else}}
-          <li><a href="/auth/login#login">Login in</a></li>
-        {{/if}}
+
+      <li><a href="/auth/login">LOGIN</a></li>
+      <li><a href="/auth/register">SIGN UP</a></li>
+
       {{/if}}
 
     </ul>

@@ -1,56 +1,44 @@
-<h1>Notebooks</h1>
+<h1 class="mt-2 text-center">Notebooks</h1>
 
 {{#if notebooks.length}}
-  <div class="content_notebook">
-    {{#each notebooks}}
-      <div class="card">
-        <div class="card-image">
-          <img src="{{img}}" title="{{title}}" />
-        </div>
-        <div class="card-content">
-          <span class="card-title">{{title}}</span>
-          <p>{{descr}}</p>
-          <b class="price">{{price}}</b>
-        </div>
-        <div class="card-action actions">
-          <a href="/notebooks/{{id}}" target="_blank">Detail</a>
-          {{#if @root.isAuth}}
-            {{#ifeq userId._id @root.userId}} 
-              <a href="/notebooks/{{id}}/edit?allow=true">Edit</a>
-            {{/ifeq}}
-            <form action="/card/add" method="POST">
-              <input type="hidden" name="id" value="{{id}}" />
-              <button type="submit" class="btn btn-primary">Buy</button>
-            </form>
-          {{/if}}
-        </div>
-      </div>
-    {{/each}}
+<a href="/card" class="position-absolute top-10 end-0">
+  <div class="btn position-fixed rounded-pill">
+    <i class="fa fa-shopping-cart fs-2"></i>
+    <span class="position-absolute top-0 start-95 translate-middle badge rounded-pill bg-danger">
+      {{count}}+
+    </span>
   </div>
-{{else}}
-  <div class="mt-100">
-    <div class="row bascket">
-      <div class="col-md-12">
-        <div class="card bascket">
-          <div class="card-body cart">
-            <div class="col-sm-12 empty-cart-cls text-center">
-              <img
-                src="https://i.imgur.com/dCdflKN.png"
-                width="130"
-                height="130"
-                class="img-fluid mb-4 mr-3"
-              />
-              <h3><strong>Notebooks empty</strong></h3>
-              <h4>Add something to make me happy :)</h4>
-              <a
-                href="/add"
-                class="btn btn-primary cart-btn-transform m-3"
-                data-abc="true"
-              >Add Notebooks</a>
-            </div>
-          </div>
-        </div>
+</a>
+<div class="content_notebook">
+  {{#each notebooks}}
+
+  <div class="card shadow">
+    <img class="card-img-top" src="{{img}}" alt="{{title}}" />
+    <div class="card-body">
+      <h1 class="card-title">{{title}}</h1>
+      <p class="card-text">{{descr}}</p>
+      <h2>${{price}}</h2>
+
+    </div>
+    <div class="card-body">
+      <hr>
+      <div class="btn-group d-flex justify-content-between align-items-center">
+        <a href="/notebooks/{{id}}" target="_blank" class="btn btn-outline-warning">Detail</a>
+        {{#if @root.isAuth}}
+        {{#ifuser userId._id @root.userId}}
+        <a href="/notebooks/{{id}}/edit?allow=true" class="btn btn-outline-info">Edit</a>
+        {{/ifuser}}
+        <form action="/card/add" method="POST">
+          <input type="hidden" name="id" value="{{id}}">
+          <button type="submit" class="btn btn-success">Buy</button>
+        </form>
+        {{/if}}
       </div>
     </div>
   </div>
+
+  {{/each}}
+</div>
+{{else}}
+<h1>Not Found Notebook</h1>
 {{/if}}

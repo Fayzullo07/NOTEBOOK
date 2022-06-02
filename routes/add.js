@@ -1,42 +1,44 @@
-const {Router} = require("express");
-const {validationResult} = require("express-validator/check");
-const Notebook = require("../models/notebook");
+const { Router } = require("express");
+const { validationResult } = require("express-validator/check");
 const auth = require("../middleware/auth");
-const {notebookValidators} = require("../utils/validators");
+const Notebook = require("../models/notebook");
 const router = Router();
+const { notebookValidators } = require("../utils/validators");
 
 router.get("/", auth, (req, res) => {
-    res.render("add", {title: "Add Notebook", isAdd: true});
+  res.render("add", { title: "Add Notebook" });
 });
 
 router.post("/", auth, notebookValidators, async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(422).render("add", {
-            title: "Add Notebook",
-            isAdd: true,
-            error: errors.array()[0].msg,
-            data: {
-                title: req.body.title,
-                price: req.body.title,
-                img: req.body.img,
-                descr: req.body.descr
-            }
-        })
-    }
-    const notebook = new Notebook({
-        title: req.body.title, 
-        price: req.body.price, 
-        img: req.body.img,
-        descr: req.body.descr,
-        userId: req.user,
+  const errors = validationResult(req);
+  const { title, price, img, descr } = req.body;
+  if (!errors.isEmpty()) {
+    return res.status(422).render("add", {
+      title: "Add Notebook",
+      error: errors.array()[0].msg,
+      data: {
+        title,
+        price,
+        img,
+        descr,
+      },
     });
-    try {
-        await notebook.save();
-        res.redirect("/notebooks");
-    } catch (e) {
-        console.log(e)
-    }
+  }
+
+  const notebook = new Notebook({
+    title,
+    price,
+    img,
+    descr,
+    userId: req.user,
+  });
+
+  try {
+    await notebook.save();
+    res.redirect("/notebooks");
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = router;

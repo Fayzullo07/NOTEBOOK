@@ -1,17 +1,13 @@
-const {Router} = require("express");
-const Notebook = require("../models/notebook");
+const { Router } = require("express");
 const router = Router();
+const Notebooks = require("../models/notebook");
 
 router.get("/", async (req, res) => {
-    const notebooks = await Notebook.find()
-      .populate("userId", "email name")
-      .select("price title img descr");
-
-    res.render("index", {
-        title: "Main Page",
-        isHome: true,
-        notebooks,
-      });
+  const notebooks_images = await Notebooks.find().select("img");
+  res.render("index", {
+    title: "Main Page",
+    notebooks_images,
+  });
 });
 
 module.exports = router;

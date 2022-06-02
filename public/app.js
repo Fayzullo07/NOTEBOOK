@@ -1,33 +1,86 @@
-const toCurrency = (price) => {
-  return new Intl.NumberFormat("us-US", {
-    currency: "usd",
-    style: "currency",
-  }).format(price);
-};
+const $card = document.querySelector("#card");
 
-const toDate = date => {
-  return new Intl.DateTimeFormat("us-US", {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-  }).format(new Date(date))
+function renderCart(card) {
+  const dynamicHTML = card.notebooks
+    .map((c) => {
+      return `
+                    <div class="card rounded-3 mb-4 shadow">
+                        <div class="card-body p-4">
+                            <div class="row d-flex justify-content-between align-items-center">
+
+                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                <img src="${c.img}" class="img-fluid rounded-3" alt="${c.title}">
+                            </div>
+
+                            <div class="col-md-3 col-lg-3 col-xl-3">
+                                <h1 class=" fw-normal mb-2">${c.title}</h1>
+                            </div>
+
+                            <div class="col-md-3 col-lg-3 col-xl-2 d-flex justify-content-center">
+                                <button class="btn btn-link px-2">
+                                    <i class="fas fa-minus js_minus" data-id="${c.id}"></i>
+                                </button>
+
+                                <div>${c.count}</div>
+
+                                <button class="btn btn-link px-2">
+                                    <i class="fas fa-plus js_plus" data-id="${c.id}"></i>
+                                </button>
+                            </div>
+
+                            <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                <h4 class="mb-0">$${c.price}</h4>
+                            </div>
+
+                            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                <p class="text-danger"><i class="fas fa-trash fa-lg js_remove" data-id="${c.id}"></i></p>
+                            </div>
+
+                            </div>
+                        </div>
+                    </div>
+              `;
+    })
+    .join("");
+  $card.querySelector("#card_one").innerHTML = dynamicHTML;
+  $card.querySelector("#price").innerHTML = card.price;
 }
 
-document.querySelectorAll(".price").forEach((c) => {
-  c.textContent = toCurrency(c.textContent);
-});
-
-document.querySelectorAll(".data").forEach((s) => {
-  s.textContent = toDate(s.textContent)
-})
-
-const $card = document.querySelector("#card");
 if ($card) {
   $card.addEventListener("click", (e) => {
-    if (e.target.classList.contains("js-remove")) {
+    if (e.target.classList.contains("js_minus")) {
+      const id = e.target.dataset.id;
+
+      fetch("/card/minus/" + id, {
+        method: "delete",
+      })
+        .then((res) => res.json())
+        .then((card) => {
+          if (card.notebooks.length) {
+            renderCart(card);
+          } else {
+            $card.innerHTML = `<h1>Not</h1>`;
+          }
+        });
+    }
+
+    if (e.target.classList.contains("js_plus")) {
+      const id = e.target.dataset.id;
+
+      fetch("/card/plus/" + id, {
+        method: "post",
+      })
+        .then((res) => res.json())
+        .then((card) => {
+          if (card.notebooks.length) {
+            renderCart(card);
+          } else {
+            $card.innerHTML = "<h1>Not</h1>";
+          }
+        });
+    }
+
+    if (e.target.classList.contains("js_remove")) {
       const id = e.target.dataset.id;
 
       fetch("/card/remove/" + id, {
@@ -36,55 +89,11 @@ if ($card) {
         .then((res) => res.json())
         .then((card) => {
           if (card.notebooks.length) {
-            const dynamicHtml = card.notebooks
-              .map((c) => {
-                return `
-                    <tr>
-                        <td>${c.title}</td>
-                        <td>${c.count}</td>
-                        <td>
-                            <button class="btn btn-small js-remove" data-id="${c.id}">Delete</button>
-                        </td>
-                    </tr>
-                    `;
-              })
-              .join("");
-            $card.querySelector("tbody").innerHTML = dynamicHtml;
-            $card.querySelector(".price").textContent = toCurrency(card.price);
+            renderCart(card);
           } else {
-            $card.innerHTML = `
-                <div class="mt-100">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="card bascket">
-                      <div class="card-body cart">
-                        <div class="col-sm-12 empty-cart-cls text-center">
-                          <img
-                            src="https://i.imgur.com/dCdflKN.png"
-                            width="130"
-                            height="130"
-                            class="img-fluid mb-4 mr-3"
-                          />
-                          <h3><strong>Your Cart is Empty</strong></h3>
-                          <h4>Add something to make me happy 😭</h4>
-                          <a
-                            href="/notebooks"
-                            class="btn btn-primary cart-btn-transform m-3"
-                            data-abc="true"
-                          >continue shopping</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div
-                `;
+            $card.innerHTML = "<h1>Not</h1>";
           }
         });
     }
   });
 }
-
-M.Tabs.init(document.querySelectorAll(".tabs"));
-
-
