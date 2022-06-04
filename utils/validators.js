@@ -1,5 +1,6 @@
 const { body } = require("express-validator/check");
 const User = require("../models/user");
+const path = require("path");
 
 exports.registerValidators = [
   body("email")
@@ -34,10 +35,18 @@ exports.registerValidators = [
 exports.notebookValidators = [
   body("title")
     .isLength({ min: 2 })
-    .withMessage("Minimum length for title should be 3 symbols")
+    .withMessage("Minimum length for title should be 2 symbols")
     .trim(),
   body("price").isNumeric().withMessage("Write correct price"),
-  body("img").isURL().withMessage("Write correct URL Image"),
+  body("img").custom((value, { req }) => {
+    if (req.file) {
+      let ext = path.extname(req.file.originalname);
+      if (ext !== ".jpg" && ext !== ".jpeg" && ext !== ".png") {
+        throw new Error("File type is not supported");
+      }
+      return true;
+    }
+  }),
   body("descr")
     .isLength({ min: 10 })
     .withMessage("Description should be min 10 symbols"),

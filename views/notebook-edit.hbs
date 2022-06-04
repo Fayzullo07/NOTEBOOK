@@ -1,6 +1,14 @@
 <h3 class="text-center mt-4">Edit Notebook {{notebook.title}}</h3>
 
-<form action="/notebooks/edit" method="POST" class="shadow p-4 mt-4" novalidate>
+{{#if error}}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Error!</strong>
+  {{error}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{{/if}}
+
+<form action="/notebooks/edit" method="POST" class="shadow p-4 mt-4" enctype="multipart/form-data" novalidate>
   <div class="form-floating mb-3 mt-3">
     <input type="text" class="form-control" id="title" placeholder="Enter Notebooks Name" name="title" required
       value="{{notebook.title}}" />
@@ -11,10 +19,8 @@
       value="{{notebook.price}}" />
     <label for="price" class="form-label">Price</label>
   </div>
-  <div class="form-floating mb-3 mt-3">
-    <input type="text" class="form-control" id="img" placeholder="Enter URL Image" name="img" required
-      value="{{notebook.img}}" />
-    <label for="img" class="form-label">URL Image</label>
+  <div class="mb-3 mt-3">
+    <input type="file" class="form-control  form-control-lg" placeholder="Enter Image" name="img" required />
   </div>
   <div class="form-floating mb-3">
     <input type="text" class="form-control" id="descr" placeholder="Enter Description" name="descr" required

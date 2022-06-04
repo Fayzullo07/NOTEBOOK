@@ -8,15 +8,15 @@
 
 <div class="row shadow rounded-3  mt-lg-5 mt-md-5 mb-3">
     <div class="col-md-6">
-        <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+        <div class="d-flex flex-column align-items-center text-center p-3">
             {{#if user.photoUrl}}
-            <img class="rounded mt-md-5" width="300px" src="/{{user.photoUrl}}" alt="photo-{{user.name}}">
+            <img class="rounded mt-md-5" width="250px" src="{{user.photoUrl}}" alt="photo-{{user.name}}">
             {{else}}
-            <img class="rounded mt-3" width="300px"
+            <img class="rounded mt-3" width="250px"
                 src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
                 alt="photo-{{user.name}}">
             {{/if}}
-            <h1 class="font-weight-bold">{{user.name}}</h1><b class="text-black-50">{{user.email}}</b><span> </span>
+            <h1 class="font-weight-bold">{{user.name}}</h1><b class="text-black-50">{{user.email}}</b>
         </div>
     </div>
     <div class="col-md-6">

@@ -4,6 +4,8 @@ const { validationResult } = require("express-validator");
 const auth = require("../middleware/auth");
 const router = Router();
 const { updateProfileValidators } = require("../utils/validators");
+const cloudinary = require("../utils/cloudinary");
+const upload = require("../utils/multer");
 
 router.get("/", auth, async (req, res) => {
   res.render("profile", {
@@ -12,12 +14,12 @@ router.get("/", auth, async (req, res) => {
   });
 });
 
-router.post("/", auth, updateProfileValidators, async (req, res) => {
+router.post("/", upload.single("photo"), auth, updateProfileValidators, async (req, res) => {
   try {
     const { name, email, password } = req.body;
-
+    
     const errors = validationResult(req);
-
+    
     if (!errors.isEmpty()) {
       return res.status(422).render("profile", {
         title: "Profile",
@@ -29,15 +31,20 @@ router.post("/", auth, updateProfileValidators, async (req, res) => {
         password,
       });
     }
-
+    
     const object_photo = {};
 
+    // Upload image to cloudinary
     if (req.file) {
-      object_photo.photoUrl = req.file.path;
+      const result = await cloudinary.uploader.upload(req.file.path);
+      object_photo.photoUrl = result.secure_url;
     }
 
     const hashPass = await bcrypt.hash(password, 10);
     await req.user.updateProfile(name, email, hashPass, object_photo);
+    req.session.user = req.user;
+    req.session.save();
+
     res.render("profile", {
       title: "Profile",
       user: req.user,

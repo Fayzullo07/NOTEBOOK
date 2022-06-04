@@ -8,7 +8,7 @@
 </div>
 {{/if}}
 
-<form action="/add" method="POST" class="shadow p-4 mt-4" novalidate>
+<form action="/add" method="POST" class="shadow p-4 mt-4" enctype="multipart/form-data" novalidate>
   <div class="form-floating mb-3 mt-3">
     <input type="text" class="form-control" id="title" placeholder="Enter Notebooks Name" name="title" required
       value="{{data.title}}" />
@@ -19,10 +19,8 @@
       value="{{data.price}}" />
     <label for="price" class="form-label">Price</label>
   </div>
-  <div class="form-floating mb-3 mt-3">
-    <input type="text" class="form-control" id="img" placeholder="Enter URL Image" name="img" required
-      value="{{data.img}}" />
-    <label for="img" class="form-label">URL Image</label>
+  <div class="mb-3 mt-3">
+    <input type="file" class="form-control  form-control-lg" placeholder="Enter Image" name="img" required />
   </div>
   <div class="form-floating mb-3">
     <input type="text" class="form-control" id="descr" placeholder="Enter Description" name="descr" required

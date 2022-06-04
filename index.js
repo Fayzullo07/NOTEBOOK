@@ -23,7 +23,6 @@ const ordersRoutes = require("./routes/orders");
 // MIDDLEWARES
 const varMiddleware = require("./middleware/var");
 const userMiddleware = require("./middleware/user");
-const fileMiddleware = require("./middleware/file");
 const errorPage = require("./middleware/error");
 
 const hbs = exphbs.create({
@@ -43,7 +42,6 @@ app.set("view engine", "hbs");
 app.set("views", "views");
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
@@ -54,7 +52,6 @@ app.use(
   })
 );
 
-app.use(fileMiddleware.single("photo"));
 app.use(varMiddleware);
 app.use(userMiddleware);
 
